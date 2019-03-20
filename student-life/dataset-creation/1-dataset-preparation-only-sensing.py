@@ -98,10 +98,10 @@ def merge_sensing_data(activity, audio, conversation, bluetooth, wifi, wifi_loc,
         data = {'timestamp': time}
         item = bluetooth[bluetooth.time == time]
         data['total_devices_around'] = item.shape[0]
-        data['total_nearer'] = item[item.level >= -70].shape[0]
-        data['total_near'] = item[(item.level >= -80) & (item.level < -70)].shape[0]
+        data['total_nearer'] = item[(item.level >= -65) & (item.level <= 0)].shape[0]
+        data['total_near'] = item[(item.level >= -80) & (item.level < -65)].shape[0]
         data['total_far'] = item[(item.level >= -90) & (item.level < -80)].shape[0]
-        data['total_farther'] = item[(item.level >= -100) & (item.level < -90)].shape[0]
+        data['total_farther'] = item[(item.level >= -125) & (item.level < -90)].shape[0] # Normally -100 is max but for one anomaly.
         data['level_avg'] = round(item.level.mean())
         data['level_std'] = item.level.std()
         bluetooth_new = bluetooth_new.append(data, ignore_index=True)
